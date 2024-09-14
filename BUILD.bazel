@@ -4,29 +4,11 @@ package(default_visibility = ["//visibility:public"])
 # Custom container macro
 load("//:build/container.bzl", "build_multi_arch_image")
 
-config_setting(
-    name = "release",
-    values = {
-        "compilation_mode": "opt",
-    },
-)
 
 rust_binary(
     name = "hello_world",
     srcs = ["src/main.rs"],
-        crate_root = "src/main.rs",
-        rustc_flags = select({
-            "//:release": [
-                "-Clto=true",
-                "-Ccodegen-units=1",
-                "-Cpanic=abort",
-                "-Copt-level=3",
-                "-Cstrip=symbols",
-            ],
-            "//conditions:default": [
-                "-Copt-level=0",
-            ],
-        }),
+    crate_root = "src/main.rs",
     deps = [
         "//thirdparty/crates:anyhow",
         "//thirdparty/crates:reqwest",

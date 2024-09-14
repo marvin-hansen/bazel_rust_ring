@@ -12,6 +12,9 @@ bazel_dep(name = "rules_pkg", version = "1.0.1")
 # https://github.com/bazelbuild/platforms/releases
 bazel_dep(name = "platforms", version = "0.0.10")
 
+# https://github.com/bazelbuild/rules_python/releases
+bazel_dep(name = "rules_python", version = "0.35.0")
+
 # https://github.com/bazel-contrib/toolchains_llvm
 bazel_dep(name = "toolchains_llvm", version = "1.1.2")
 
@@ -126,6 +129,16 @@ use_repo(llvm, "llvm_toolchain_aarch64_with_sysroot")
 
 # Register all LLVM toolchains
 register_toolchains("@llvm_toolchain//:all")
+
+####################
+# Python toolchain #
+###################
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    configure_coverage_tool = False,
+    ignore_root_user_error = True,
+    python_version = "3.11",
+)
 
 ###############################################################################
 #  O C I  I M A G E: https://github.com/bazel-contrib/rules_oci/releases
