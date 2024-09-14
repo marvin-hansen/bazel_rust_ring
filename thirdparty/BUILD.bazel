@@ -78,12 +78,6 @@ crates_vendor(
             package = "bon",
             version = "2.3.0",
         ),
-        "binance-rs-async": crate.spec(
-            default_features = False,
-            # features = ["rustls-tls"],
-            package = "binance-rs-async",
-            version = "1.3",
-        ),
         "chrono": crate.spec(
             features = ["serde"],
             package = "chrono",

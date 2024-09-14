@@ -11,8 +11,10 @@ rust_binary(
     crate_root = "src/main.rs",
     deps = [
         "//thirdparty/crates:anyhow",
-        "//thirdparty/crates:reqwest",
-        "//thirdparty/crates:rustls",
+        "//thirdparty/crates:tokio",
+        "//thirdparty/crates:tonic",
+        "//thirdparty/crates:tonic-health",
+        "//thirdparty/crates:warp",
     ],
 )
 
