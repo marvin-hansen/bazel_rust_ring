@@ -2,19 +2,159 @@ load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_vendor")
 
 crates_vendor(
     name = "crates_vendor",
-    annotations = {},
+    annotations = {
+    },
     mode = "local",
     packages = {
-        # Other External Crates
-        "anyhow": crate.spec(
-            package = "anyhow",
-            version = "1.0",
+        # Custom Memory Allocator
+        # https://www.tweag.io/blog/2023-08-10-rust-static-link-with-mimalloc/
+        "mimalloc": crate.spec(
+            package = "mimalloc",
+            version = "0.1.42",
         ),
         "rustls": crate.spec(
             default_features = False,
             features = ["tls12"],
             package = "rustls",
             version = "0.23.13",
+        ),
+        #
+        # protobufs/gRPC in Rust
+        #
+        "prost": crate.spec(
+            package = "prost",
+            version = "0.13.0",
+        ),
+        "prost-types": crate.spec(
+            default_features = False,
+            package = "prost-types",
+            version = "0.13.0",
+        ),
+        "tonic": crate.spec(
+            features = ["transport"],
+            package = "tonic",
+            version = "0.12.0",
+        ),
+        "tonic-build": crate.spec(
+            package = "tonic-build",
+            version = "0.12.0",
+        ),
+        "tonic-health": crate.spec(
+            default_features = False,
+            features = ["transport"],
+            package = "tonic-health",
+            version = "0.12.0",
+        ),
+        "protoc-gen-prost": crate.spec(
+            package = "protoc-gen-prost",
+            version = "0.3.1",
+        ),
+        "protoc-gen-tonic": crate.spec(
+            package = "protoc-gen-tonic",
+            version = "0.4.0",
+        ),
+        # Other External Crates
+        "anyhow": crate.spec(
+            package = "anyhow",
+            version = "1.0",
+        ),
+        "arc-swap": crate.spec(
+            package = "arc-swap",
+            version = "1.7.0",
+        ),
+        "base64ct": crate.spec(
+            default_features = False,
+            features = ["alloc"],
+            package = "base64ct",
+            version = "1.6.0",
+        ),
+        "base16ct": crate.spec(
+            default_features = False,
+            features = ["alloc"],
+            package = "base16ct",
+            version = "0.2.0",
+        ),
+        "bon": crate.spec(
+            package = "bon",
+            version = "2.3.0",
+        ),
+        "binance-rs-async": crate.spec(
+            default_features = False,
+            # features = ["rustls-tls"],
+            package = "binance-rs-async",
+            version = "1.3",
+        ),
+        "chrono": crate.spec(
+            features = ["serde"],
+            package = "chrono",
+            version = "0.4",
+        ),
+        "config-file": crate.spec(
+            package = "config-file",
+            version = "0.2",
+        ),
+        "ctrlc": crate.spec(
+            package = "ctrlc",
+            version = "3.4",
+        ),
+        "clickhouse-rs": crate.spec(
+            package = "clickhouse-rs",
+            version = "1.1.0-alpha.1",
+        ),
+        "csv": crate.spec(
+            default_features = False,
+            package = "csv",
+            version = "1.3",
+        ),
+        "diesel": crate.spec(
+            default_features = False,
+            features = [
+                "postgres",
+                "r2d2",
+            ],
+            package = "diesel",
+            version = "2.2.2",
+        ),
+        "diesel_migrations": crate.spec(
+            default_features = False,
+            features = ["postgres"],
+            package = "diesel_migrations",
+            version = "2.2.0",
+        ),
+        "dotenv": crate.spec(
+            default_features = False,
+            package = "dotenv",
+            version = "0.15",
+        ),
+        "encoding_rs": crate.spec(
+            package = "encoding_rs",
+            version = "0.8",
+        ),
+        "futures": crate.spec(
+            package = "futures",
+            version = "0.3",
+        ),
+        "hickory-resolver": crate.spec(
+            default_features = False,
+            features = ["tokio-runtime"],
+            package = "hickory-resolver",
+            version = "0.24",
+        ),
+        "klickhouse": crate.spec(
+            package = "klickhouse",
+            version = "0.13",
+        ),
+        "lru": crate.spec(
+            package = "lru",
+            version = "0.12",
+        ),
+        "mini-moka": crate.spec(
+            package = "mini-moka",
+            version = "0.10.3",
+        ),
+        "parquet": crate.spec(
+            package = "parquet",
+            version = "53.0.0",
         ),
         "reqwest": crate.spec(
             default_features = False,
@@ -27,7 +167,61 @@ crates_vendor(
             package = "reqwest",
             version = "0.12",
         ),
+        "rust_decimal": crate.spec(
+            package = "rust_decimal",
+            version = "1.34",
+        ),
+        "rust_decimal_macros": crate.spec(
+            package = "rust_decimal_macros",
+            version = "1.34",
+        ),
+        "serde": crate.spec(
+            features = ["derive"],
+            package = "serde",
+            version = "1.0",
+        ),
+        "serde_json": crate.spec(
+            package = "serde_json",
+            version = "1.0",
+        ),
+        "sha3": crate.spec(
+            default_features = False,
+            package = "sha3",
+            version = "0.11.0-pre.3",
+        ),
+        "tokio": crate.spec(
+            default_features = False,
+            features = [
+                "macros",
+                "net",
+                "rt-multi-thread",
+                "signal",
+            ],
+            package = "tokio",
+            version = "1.40.0",
+        ),
+        "tokio-cron-scheduler": crate.spec(
+            features = ["signal"],
+            package = "tokio-cron-scheduler",
+            version = "0.11",
+        ),
+        "tokio-tungstenite": crate.spec(
+            default_features = False,
+            features = [
+                "rustls",
+            ],
+            package = "tokio-tungstenite",
+            version = "0.24",
+        ),
+        "tokio-timer": crate.spec(
+            package = "tokio-timer",
+            version = "0.2",
+        ),
+        "warp": crate.spec(
+            package = "warp",
+            version = "0.3",
+        ),
     },
-    repository_name = "bazel_rust_ring_vendored",
+    repository_name = "queng_vendored",
     tags = ["manual"],
 )
