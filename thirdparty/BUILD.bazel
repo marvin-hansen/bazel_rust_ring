@@ -1,0 +1,33 @@
+load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_vendor")
+
+crates_vendor(
+    name = "crates_vendor",
+    annotations = {},
+    mode = "local",
+    packages = {
+        # Other External Crates
+        "anyhow": crate.spec(
+            package = "anyhow",
+            version = "1.0",
+        ),
+        "rustls": crate.spec(
+            default_features = False,
+            features = ["tls12"],
+            package = "rustls",
+            version = "0.23.13",
+        ),
+        "reqwest": crate.spec(
+            default_features = False,
+            features = [
+                "rustls-tls",
+                "json",
+                "blocking",
+                "gzip",
+            ],
+            package = "reqwest",
+            version = "0.12",
+        ),
+    },
+    repository_name = "bazel_rust_ring_vendored",
+    tags = ["manual"],
+)

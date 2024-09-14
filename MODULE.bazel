@@ -1,9 +1,7 @@
-
 module(name = "bazel_rust_ring")
 
 # https://github.com/bazelbuild/rules_rust/releases
 bazel_dep(name = "rules_rust", version = "0.50.1")
-
 
 ##################
 # Rust toolchain #
@@ -31,6 +29,5 @@ crate.spec(
     package = "anyhow",
     version = "1.0.77",
 )
-
 crate.from_specs()
 use_repo(crate, "crates")
