@@ -1,11 +1,48 @@
 load("@rules_rust//rust:defs.bzl", "rust_binary")
-
 package(default_visibility = ["//visibility:public"])
+
+# Custom container macro
+load("//:build/container.bzl", "build_multi_arch_image")
+
+config_setting(
+    name = "release",
+    values = {
+        "compilation_mode": "opt",
+    },
+)
 
 rust_binary(
     name = "hello_world",
     srcs = ["src/main.rs"],
+        crate_root = "src/main.rs",
+        rustc_flags = select({
+            "//:release": [
+                "-Clto=true",
+                "-Ccodegen-units=1",
+                "-Cpanic=abort",
+                "-Copt-level=3",
+                "-Cstrip=symbols",
+            ],
+            "//conditions:default": [
+                "-Copt-level=0",
+            ],
+        }),
     deps = [
-        "@crates//:anyhow",
+        "//thirdparty/crates:anyhow",
+        "//thirdparty/crates:reqwest",
+        "//thirdparty/crates:rustls",
     ],
 )
+
+build_multi_arch_image(
+    name = "image_index",
+    srcs = [":hello_world"],
+    base = "@distroless",
+    exposed_ports = [],
+    platforms = [
+        "//build/platforms:linux_x86_64_musl",
+        "//build/platforms:linux_arm64_musl",
+    ],
+    visibility = ["//visibility:public"],
+)
+
